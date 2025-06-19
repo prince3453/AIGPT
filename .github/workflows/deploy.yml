@@ -1,10 +1,10 @@
 name: Deploy to GitHub Pages
-
 on:
   push:
     branches:
-      - dev   # Triggers workflow only on dev branch pushes
-
+      - dev
+permissions:
+  contents: write
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
