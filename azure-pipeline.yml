@@ -1,42 +1,35 @@
-trigger:
-  branches:
-    include:
-    - dev
+name: Dev Pipeline
 
-pool:
-  vmImage: 'ubuntu-latest'
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
 
 jobs:
-- job: BuildAndTest
-  displayName: 'Build and Test React App'
-  steps:
-  
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '18.x'
-    displayName: 'Setup Node.js'
-  
-  - script: npm install
-    displayName: 'Install Dependencies'
-  
-  - script: |
-      export CI=true
-      npm test -- --watchAll=false --passWithNoTests
-    displayName: 'Run Tests'
-    continueOnError: true
-  
-  - script: npm run build
-    displayName: 'Build React App'
-  
-  - script: |
-      echo "Starting local server test..."
-      timeout 30s npx http-server build -p 3000 &
-      sleep 10
-      
-      if curl -f http://127.0.0.1:3000; then
-        echo "✅ Local deployment successful!"
-      else
-        echo "❌ Local deployment failed"
-        exit 1
-      fi
-    displayName: 'Test Local Deployment'
+  dev-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build project
+        run: npm run build
+
+      # Optionally, start dev server (will exit immediately on CI)
+      # - name: Start dev server
+      #   run: npm start
