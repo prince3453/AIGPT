@@ -1,12 +1,9 @@
 name: Dev Pipeline
 
-on:
-  push:
-    branches:
-      - dev
-  pull_request:
-    branches:
-      - dev
+trigger:
+    - dev
+pr:
+    - dev
 
 jobs:
   build-and-test:
