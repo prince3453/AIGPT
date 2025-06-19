@@ -9,14 +9,14 @@ on:
       - dev
 
 jobs:
-  dev-build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Use Node.js 20.x
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -24,12 +24,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Lint code
+        run: npm run lint
+
       - name: Run tests
-        run: npm test
+        run: npm test -- --watchAll=false
 
-      - name: Build project
+      - name: Build app
         run: npm run build
-
-      # Optionally, start dev server (will exit immediately on CI)
-      # - name: Start dev server
-      #   run: npm start
