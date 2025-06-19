@@ -2,6 +2,7 @@
   "name": "aigpt",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://prince3453.github.io/AIGPT",
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
@@ -18,7 +19,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
+    "predeploy": "npm run build",
+"deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "jest-junit": "^16.0.0"
