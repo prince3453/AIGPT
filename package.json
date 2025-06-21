@@ -15,6 +15,7 @@
     "gh-pages": "^6.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-markdown": "^10.1.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -25,7 +26,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "server" : "node server.js"
   },
   "devDependencies": {
     "jest-junit": "^16.0.0"

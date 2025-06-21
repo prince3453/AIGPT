@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Dashboard.css";
+import ReactMarkdown from "react-markdown";
 
 const initialChats = [
   {
@@ -8,6 +9,15 @@ const initialChats = [
     messages: [{ from: "bot", text: "Hello! How can I help you today?" }]
   }
 ];
+
+const generateChatTitle = (text) => {
+  const words = text
+    .replace(/[^\w\s]/g, "") // Remove punctuation
+    .trim()
+    .split(/\s+/)
+    .slice(0, 5); // Limit to 5 words
+  return words.map(word => word[0].toUpperCase() + word.slice(1)).join(" ");
+};
 
 const Dashboard = ({ user, onLogout }) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -26,19 +36,34 @@ const Dashboard = ({ user, onLogout }) => {
 
   const handleSend = async () => {
     if (input.trim() === "") return;
-    
+
     // Append user's message to the current chat
-    const updatedChats = chats.map((chat) => {
-      if (chat.id === activeChatId) {
+    const currentInput = input;
+
+const updatedChats = chats.map((chat) => {
+  if (chat.id === activeChatId) {
+    return {
+      ...chat,
+      messages: [...chat.messages, { from: "user", text: currentInput }]
+    };
+  }
+  return chat;
+});
+
+    // Update chat title if it starts with "Chat" or is "Welcome Chat"
+    let updatedChatsWithTitle = updatedChats.map((chat) => {
+      if (
+        chat.id === activeChatId &&
+        (chat.title.startsWith("Chat") || chat.title === "Welcome Chat")
+      ) {
         return {
           ...chat,
-          messages: [...chat.messages, { from: "user", text: input }]
+          title: generateChatTitle(currentInput)
         };
       }
       return chat;
     });
-    setChats(updatedChats);
-    const currentInput = input;
+    setChats(updatedChatsWithTitle);
     setInput("");
     setIsLoading(true);
 
@@ -56,12 +81,12 @@ const Dashboard = ({ user, onLogout }) => {
           prevChats.map((chat) =>
             chat.id === activeChatId
               ? {
-                  ...chat,
-                  messages: [
-                    ...chat.messages,
-                    { from: "bot", text: data.reply }
-                  ]
-                }
+                ...chat,
+                messages: [
+                  ...chat.messages,
+                  { from: "bot", text: data.reply }
+                ]
+              }
               : chat
           )
         );
@@ -74,12 +99,12 @@ const Dashboard = ({ user, onLogout }) => {
         prevChats.map((chat) =>
           chat.id === activeChatId
             ? {
-                ...chat,
-                messages: [
-                  ...chat.messages,
-                  { from: "bot", text: "Error retrieving response." }
-                ]
-              }
+              ...chat,
+              messages: [
+                ...chat.messages,
+                { from: "bot", text: "Error retrieving response." }
+              ]
+            }
             : chat
         )
       );
@@ -214,7 +239,11 @@ const Dashboard = ({ user, onLogout }) => {
         <div className="chat-messages">
           {activeChat?.messages.map((msg, idx) => (
             <div key={idx} className={`chat-message ${msg.from === "user" ? "user" : "bot"}`}>
-              {msg.text}
+              {msg.from === "bot" ? (
+                <ReactMarkdown>{msg.text}</ReactMarkdown>
+              ) : (
+                msg.text
+              )}
             </div>
           ))}
           {isLoading && (
