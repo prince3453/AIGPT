@@ -3,6 +3,7 @@
   height: 100vh;
   width: 100vw;
   background: #ececec;
+  overflow: hidden;
 }
 
 /* Sidebar */
@@ -372,4 +373,116 @@
 }
 .cancel-btn:hover {
   background: #ccc;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 14px 16px;
+  background: #f7f7f7;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  /* Optional: make the chat bubbles closer to the top on empty states */
+  justify-content: flex-start;
+}
+
+/* More compact chat bubbles, less padding, smaller font */
+.chat-message {
+  margin-bottom: 8px;
+  padding: 8px 14px;
+  border-radius: 14px;
+  max-width: 68%;
+  font-size: 0.97rem;
+  line-height: 1.35;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  /* Slightly more margin between user/bot for visual clarity */
+}
+.chat-message.user {
+  align-self: flex-end;
+  background: #8ecae6;
+  color: #023047;
+  /* Optional: smaller font for the user */
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+.chat-message.bot {
+  align-self: flex-start;
+  background: #e0e0e0;
+  color: #222;
+  font-size: 0.97rem;
+}
+
+/* Reduce whitespace between chat bubbles */
+.chat-message:not(:last-child) {
+  margin-bottom: 7px;
+}
+
+/* Responsive: On small screens, use full width for bubbles */
+@media (max-width: 600px) {
+  .chat-message {
+    max-width: 90%;
+    font-size: 0.96rem;
+    padding: 7px 10px;
+  }
+}
+
+/* Make chat header more compact */
+.chat-header {
+  background: #2b2d42;
+  color: #fff;
+  padding: 12px 17px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 1.05rem;
+}
+
+/* Compact chat input area */
+.chat-input-area {
+  display: flex;
+  padding: 10px 16px;
+  border-top: 1px solid #eee;
+  background: rgba(43, 45, 66, 0.93);
+  align-items: center;
+  position: relative;
+  min-height: 56px;
+}
+.chat-input-area input {
+  flex: 1;
+  padding: 9px 13px;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  font-size: 0.97rem;
+  margin-right: 7px;
+}
+.send-btn {
+  margin-left: 0;
+  padding: 8px 15px;
+  border-radius: 16px;
+  font-size: 1.07rem;
+  min-width: 36px;
+  height: 36px;
+}
+
+/* Make the sidebar chat list more compact */
+.chat-list li {
+  padding: 10px 20px;
+  font-size: 0.99rem;
+}
+
+/* Optional: Reduce sidebar width for even more compactness */
+.sidebar {
+  width: 220px;
+  min-width: 220px;
+  max-width: 220px;
+}
+.sidebar.collapsed {
+  width: 44px !important;
+  min-width: 44px !important;
+  max-width: 44px !important;
+}
+
+/* Optional: Slightly round the chat window corners for a softer look */
+.chat-container {
+  border-radius: 10px 0 0 10px;
+  overflow: hidden;
 }
