@@ -25,7 +25,11 @@
     "eject": "react-scripts eject",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "predeploy": "npm run build",
+<<<<<<< HEAD
     "deploy": "gh-pages -d build"
+=======
+"deploy": "gh-pages -d build"
+>>>>>>> 85d5582740ddeca79bbc2d3967d2654057c34a70
   },
   "devDependencies": {
     "jest-junit": "^16.0.0"
