@@ -27,7 +27,7 @@
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "server" : "node server.js"
+    "server" : "node src/backend/server.js"
   },
   "devDependencies": {
     "jest-junit": "^16.0.0"
